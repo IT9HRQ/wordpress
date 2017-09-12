@@ -1,0 +1,25 @@
+version: '2'
+
+services:
+
+  apache:
+    build:
+      context: .
+      dockerfile: ./.devops/docker/apache/Dockerfile-apache
+    image: devops/apache
+    ports:
+    - 28080:80
+    volumes:
+    - ./:/var/www/html:rw
+    restart: always
+    links:
+    - mysql
+
+  mysql:
+    image: mariadb:10.1
+    ports:
+    - 28033:3306
+    env_file:
+    - ./.devops/docker/mysql/mysql.env
+    volumes:
+    - /var/lib/mysql

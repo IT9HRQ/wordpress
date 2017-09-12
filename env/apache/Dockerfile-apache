@@ -1,0 +1,28 @@
+# LAMP Development Container
+#
+# VERSION               0.0.1
+
+FROM        ubuntu:16.04
+MAINTAINER  Francesco Binaco <bianco@javanile.org>
+
+WORKDIR     /
+
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get upgrade -y && \
+    DEBIAN_FRONTEND=noninteractive apt-get -y install apt-utils git apache2 \
+    php7.0 php7.0-cli php7.0-common php7.0-curl php7.0-dev php7.0-gd \
+    php7.0-json php7.0-ldap php7.0-mysql php7.0-opcache php7.0-pspell \
+    php7.0-readline php7.0-recode php7.0-sqlite3 php7.0-tidy php7.0-xml \
+    php7.0-xmlrpc php-all-dev php7.0-bcmath php7.0-bz php7.0-intl\
+    php7.0-mbstring php7.0-mcrypt php7.0-zip php7.0-xsl libapache2-mod-php7.0 \
+    php-xdebug curl
+
+RUN usermod -u 1000 www-data
+
+COPY ./.devops/docker/apache/000-default.conf /etc/apache2/sites-available/000-default.conf
+
+RUN a2enmod rewrite
+RUN a2enmod headers
+RUN a2enmod ssl
+
+CMD ["apachectl", "-D", "FOREGROUND"]
