@@ -6,11 +6,13 @@ services:
     build:
       context: ./env/apache
       dockerfile: Dockerfile-apache
-    image: devops/apache
     ports:
     - 28088:80
     volumes:
-    - ./:/var/www/html:rw
+    - ./wp/:/var/www/html:rw
+    - ./web/:/var/www/html/wp-content/themes/web:rw
+    - ./src/:/var/www/html/wp-content/plugins/src:rw
+    - ./logs/:/var/www/html/logs:rw
     restart: always
     links:
     - mysql
