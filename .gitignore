@@ -22,4 +22,4 @@ Homestead.json
 #
 /web/
 !web/.gitkeep
-/.idea/
+.idea/
