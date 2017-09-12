@@ -4,11 +4,11 @@ services:
 
   apache:
     build:
-      context: .
-      dockerfile: ./.devops/docker/apache/Dockerfile-apache
+      context: ./env/apache
+      dockerfile: Dockerfile-apache
     image: devops/apache
     ports:
-    - 28080:80
+    - 28088:80
     volumes:
     - ./:/var/www/html:rw
     restart: always
@@ -20,6 +20,6 @@ services:
     ports:
     - 28033:3306
     env_file:
-    - ./.devops/docker/mysql/mysql.env
+    - ./env/mysql/mysql.env
     volumes:
     - /var/lib/mysql
